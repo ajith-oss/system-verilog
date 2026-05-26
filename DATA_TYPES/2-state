@@ -1,0 +1,19 @@
+module test_tb;
+  bit a;
+  logic b;
+   byte c;
+   longint d;
+   shortint e;
+  initial begin
+    a=1'b0;
+    b=1'b1;
+    d=1'b1;
+    e=1'b1;
+    c=1'b0;
+    $display("a=%b",a);
+    $display("b=%b",b);
+    $display("c=%b",c);
+    $display("d=%b",d);
+    $display("e=%b",e);
+  end
+endmodule
