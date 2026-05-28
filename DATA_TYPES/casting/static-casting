@@ -1,0 +1,95 @@
+module tb;
+
+  //========================================
+  // 1. Integer Type Conversion
+  //========================================
+  int  int_data = 300;
+  byte byte_data;
+
+  //========================================
+  // 2. Signed ↔ Unsigned Conversion
+  //========================================
+  bit [7:0] unsigned_data = 8'hFF;
+
+  //========================================
+  // 3. Real ↔ Integer Conversion
+  //========================================
+  real real_data = 12.75;
+  int  int_from_real;
+
+  //========================================
+  // 4. Bit Width Conversion
+  //========================================
+  int width_data = 16'h1234;
+
+  //========================================
+  // 5. Enum Conversion
+  //========================================
+  typedef enum {IDLE, START, STOP} state_t;
+
+  state_t state;
+
+  //========================================
+  // 6. Logic → Bit Conversion
+  //========================================
+  logic logic_data = 1'bX;
+  bit   bit_data;
+
+  initial begin
+
+    $display("\n========= STATIC CASTING EXAMPLES =========");
+
+    //====================================================
+    // 1. Integer Type Conversion
+    //====================================================
+    byte_data = byte'(int_data);
+
+    $display("\n1. Integer Conversion");
+    $display("int_data  = %0d", int_data);
+    $display("byte_data = %0d", byte_data);
+
+    //====================================================
+    // 2. Signed ↔ Unsigned Conversion
+    //====================================================
+    $display("\n2. Signed and Unsigned Conversion");
+    $display("unsigned value = %0d", unsigned_data);
+    $display("signed value   = %0d", signed'(unsigned_data));
+
+    //====================================================
+    // 3. Real → Integer Conversion
+    //====================================================
+    int_from_real = int'(real_data);
+
+    $display("\n3. Real to Integer Conversion");
+    $display("real_data     = %0f", real_data);
+    $display("int_from_real = %0d", int_from_real);
+
+    //====================================================
+    // 4. Bit Width Conversion
+    //====================================================
+    $display("\n4. Bit Width Conversion");
+    $display("original value = %h", width_data);
+    $display("8-bit value    = %h", 8'(width_data));
+
+    //====================================================
+    // 5. Enum Conversion
+    //====================================================
+    state = state_t'(2);
+
+    $display("\n5. Enum Conversion");
+    $display("state = %s", state.name());
+
+    //====================================================
+    // 6. Logic → Bit Conversion
+    //====================================================
+    bit_data = bit'(logic_data);
+
+    $display("\n6. Logic to Bit Conversion");
+    $display("logic_data = %b", logic_data);
+    $display("bit_data   = %b", bit_data);
+
+    $display("\n============================================");
+
+  end
+
+endmodule
