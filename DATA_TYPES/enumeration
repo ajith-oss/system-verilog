@@ -1,0 +1,26 @@
+module traffic_light_tb;
+  typedef enum logic [1:0] {
+    RED,
+    YELLOW,
+    GREEN
+  } light_t;
+  light_t light;
+
+  initial begin
+    $display("Time\tLight");
+    light = RED;
+    $display("%0t\t%0d (RED)", $time, light);
+
+    #10 light = GREEN;
+    $display("%0t\t%0d (GREEN)", $time, light);
+
+    #10 light = YELLOW;
+    $display("%0t\t%0d (YELLOW)", $time, light);
+
+    #10 light = RED;
+    $display("%0t\t%0d (RED)", $time, light);
+
+    #10 $finish;
+  end
+
+endmodule
