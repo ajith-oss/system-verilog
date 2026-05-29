@@ -1,0 +1,76 @@
+module packed_array_tb;
+  //1d packed_array//
+  
+  logic [7:0] data;
+  
+  //2d packed_array//
+  
+  logic [7:0] [1:0] nibble_data;
+  
+  //3d packed_array//
+  
+  logic [1:0][1:0][3:0] cube_data;
+  integer i,j;
+  initial begin
+    //====================================
+    //1d packed_array//
+    //====================================
+    data=8'b10101010;
+    $display("\n===== 1D PACKED ARRAY =====");
+    $display("data",data);
+    //inidividual bit accessing
+    $display("data [6]=%b",data[6]);
+    $display("data [3]=%b",data[3]);
+    //slicing
+    $display("upper=%b",data[7:4]);
+    $display("lower=%b",data[3:0]);
+    //shifiting
+    $display("left_shift=%b",data << 1);
+    $display("right_shit=%b",data >> 1);
+    //arithemetic
+    $display("adding_1=%b",data+1);
+    
+    //============================================
+    //2d_array
+    //============================================
+    nibble_data=8'd15;
+     $display("\n===== 2D PACKED ARRAY =====");
+
+    $display("nibble_data     = %b", nibble_data);
+     // accessing groups
+    $display("nibble_data[3]  = %b", nibble_data[3]);
+    $display("nibble_data[2]  = %b", nibble_data[2]);
+    $display("nibble_data[1]  = %b", nibble_data[1]);
+    $display("nibble_data[0]  = %b", nibble_data[0]);
+      // accessing individual bits
+    $display("nibble_data[3][2] = %b", nibble_data[3][1]);
+    $display("nibble_data[1][0] = %b", nibble_data[1][0]);
+     // modifying single packed element
+    nibble_data[0] = 2'b00;
+
+    $display("after modify    = %b", nibble_data);
+    //looping
+    for(i=1;i>=0;i=i-1)
+       $display("group[%0d] = %b", i, nibble_data[i]);
+//==========================================
+    //3d_array
+    //======================================
+    cube_data=8'd15;
+     $display("\n===== 3D PACKED ARRAY =====");
+
+    $display("cube_data = %b", cube_data);
+        
+ // accessing first dimension
+    $display("cube_data[1] = %b", cube_data[1]);
+    $display("cube_data[0] = %b", cube_data[0]);
+       // accessing second dimension
+    $display("cube_data[1][1] = %b", cube_data[1][1]);
+    $display("cube_data[1][0] = %b", cube_data[1][0]);
+    // accessing single bit
+    $display("cube_data[1][1][2] = %b",
+              cube_data[1][1][2]);
+  end
+endmodule
+
+
+    
