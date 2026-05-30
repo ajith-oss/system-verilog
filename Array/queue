@@ -1,0 +1,18 @@
+module queue_method_tb;
+  int uq[$];
+  int bq[$:4];
+  initial begin
+    $display("\n=======unbounded_queue=======");
+    uq.push_back(10);
+    uq.push_back(20);
+    uq.push_back(30);
+    $display("after_push_back : %p",uq);
+    $display("\n========bounded_queue=======");
+    bq.push_back(200);
+    bq.push_back(600);
+    bq.push_back(1000);
+    $display("after_push_back : %p",bq);
+      $display("Size = %0d", bq.size());
+
+  end
+endmodule
