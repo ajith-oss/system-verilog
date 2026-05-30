@@ -1,0 +1,42 @@
+
+/*module test_tb;
+  int arr[];
+  initial begin
+    arr=new[5];
+    foreach(arr[i]) begin
+      arr[i]=100+i;
+      $display("Writing arr[%0d] = %0d", i, arr[i]);
+    end
+  end
+endmodule*/
+/*module test;
+
+  int arr[];
+
+  initial begin
+
+    arr = new[4];
+
+    foreach(arr[i])
+      arr[i] = (i+1)*5;
+
+    arr = new[6](arr);
+
+    foreach(arr[i])
+      $display("%0d", arr[i]);
+
+  end
+
+endmodule*/
+
+module test_tb;
+  int marks[];
+  initial begin
+    marks=new[5];
+    $display("array_size=%0d",marks.size());
+    foreach(marks[i]) begin
+      marks[i]=(i+1)*10;
+      $display("student %0d gets %0d marks",i,marks[i]);
+    end
+  end
+endmodule
