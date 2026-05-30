@@ -1,0 +1,13 @@
+module test_tb;
+  int arr[]='{10,13,14,18,16};
+  initial begin
+    $display("orginal: %p",arr);
+    arr.sum();
+    $display("sum=%0d",arr.sum());
+    arr.sort();
+    $display("ascending order:%p",arr);
+    arr.rsort();
+    $display("descending order:%p",arr);
+    $display("max number:%0d",arr.max()[0]);
+  end
+endmodule
