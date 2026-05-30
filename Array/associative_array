@@ -1,0 +1,22 @@
+// Code your testbench here
+// or browse Examples
+module employee_tb;
+  int salary[int];
+  initial begin
+    salary[101]=40000;
+    salary[102]=50000;
+    salary[103]=55000;
+    $display("\n====initial_data_base=====");
+    foreach(salary[i])
+      $display("employee id=%0d salary=%0d",i,salary[i]);
+    //access specfic employee salary
+    $display("\nsalary_of_employee102=%0d",salary[102]);
+    //check excitence
+    if(salary.exists(102))
+      $display("emplpyee 102 exits");
+    if(!salary.exists(110))
+      $display("employee 110 not exits");
+    $display("\nTotal Employees = %0d",
+              salary.num());
+  end
+endmodule
