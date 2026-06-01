@@ -1,0 +1,9 @@
+module reduction_tb;
+  logic [3:0] a=4'b1010;
+  initial begin
+    $display("Reduction AND %b : %b",a,&a);
+    $display("Reduction OR %b : %b",a,|a);
+    $display("Reduction xor %b : %b",a,^a);
+  end
+endmodule
+    
