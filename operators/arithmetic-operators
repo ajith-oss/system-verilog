@@ -1,0 +1,13 @@
+module arithmetic_tb;
+  int a=300;
+  int b=50;
+  initial begin
+    $display("addition (a+b)=%0d",a+b);
+    $display("subtraction (a-b)=%0d",a-b);
+    $display("multiplication (a*b)=%0d",a*b);
+    $display("division (a/b)=%0d",a/b);
+    $display("modulus (a%%b)=%0d",a%b);
+             
+             
+  end
+endmodule
