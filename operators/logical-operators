@@ -1,0 +1,11 @@
+module logical_operators;
+  int a=10;
+  int b=15;
+  initial begin
+    $display("(a<b) && (a>0) =%0d",(a<b) && (a>0));
+    $display("(a>b) && (a>0)=%0d",(a>b) && (a>0));
+    $display("(a<b) || (a<0)=%0d",(a<b) || (a<0));
+    $display("!(a>b) =%0d",!(a>b));
+  end
+endmodule
+    
