@@ -1,0 +1,18 @@
+module shift_tb;
+  logic [3:0] a=4'b1110;
+  logic signed [3:0] b=4'b0110;
+  initial begin
+    $display("Logical_Right_shift(a>>1)=%b",a>>1);
+    $display("logical_left_shift(a<<1)=%b",a<<1);
+    $display("arithmetic_right_shift(a>>>1)=%b",a>>>1);
+    $display("arithmetic_left_shift(b>>>1)=%b",b>>>1);
+    $display("arithmetic_left_shift(b<<<1)=%b",b<<<1);
+    
+  end
+endmodule
+
+# KERNEL: Logical_Right_shift(a>>1)=0111
+# KERNEL: logical_left_shift(a<<1)=1100
+# KERNEL: arithmetic_right_shift(a>>>1)=1111
+# KERNEL: arithmetic_left_shift(b>>>1)=0011
+# KERNEL: arithmetic_left_shift(b<<<1)=1100
