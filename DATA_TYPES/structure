@@ -1,0 +1,36 @@
+module struct_demo;
+  typedef struct packed{
+    bit [3:0] a;
+    bit [3:0] b;
+  }packed_t;
+  typedef struct {
+    bit [3:0] a;
+    bit [3:0] b;
+  }unpacked_t;
+  packed_t p_pkt;
+  unpacked_t u_pkt;
+  initial begin
+    p_pkt=8'd12;
+    u_pkt.a=4'b1010;
+    u_pkt.b=4'b1100;
+    $display("a=%b",p_pkt.a);
+    $display("b=%b",p_pkt.b);
+    $display("p_pkt=%b",p_pkt);
+    $display("\n unpacked_struct");
+    $display("a=%b",u_pkt.a);
+    $display("b=%b",u_pkt.b);
+    $display("u_pkt=%p",u_pkt);
+  end
+endmodule
+
+
+
+
+# KERNEL: a=0000
+# KERNEL: b=1100
+# KERNEL: p_pkt=00001100
+# KERNEL: 
+# KERNEL:  unpacked_struct
+# KERNEL: a=1010
+# KERNEL: b=1100
+# KERNEL: u_pkt='{a:10, b:12}
