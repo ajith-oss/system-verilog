@@ -1,0 +1,43 @@
+module conditional_demo_tb;
+  int num=15;
+  int mark=45;
+  int age=20;
+  bit citizen=1;
+  logic opcode[3:0];
+  
+  initial begin
+    $display("\n ====IF_STATEMENT=====");
+    if(num>0)
+      $display("%0d is positive",num);
+    $display("\n ======IF_ELSE_STATEMENT=====");
+    if(num%2 == 0)
+      $display("%od is even",num);
+    else
+      $display("%0d is odd",num);
+    $display("\n =======IF_ELSE_LADDER=====");
+             if(mark>=90)
+               $display("GRADE A");
+             else if(mark>=80)
+               $display("GRADE B");
+             else if(mark>=70)
+               $display("GRADE C");
+    else if(mark == 35)
+      $display("FAIL");
+    
+    
+             else
+               $display("%0d PASSED",mark);
+    $display("\n=====NESTED_IF======");
+    if(age>=18) begin
+      if(citizen)
+        $display("ELIGIBLE FOR VOTE");
+      else
+        $display("NOT A CITIZEN");
+    end
+    else
+      $display("MINOR");
+    
+               
+  end
+endmodule
+    
