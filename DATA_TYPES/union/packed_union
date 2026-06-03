@@ -1,0 +1,20 @@
+module packed_union_tb;
+
+  typedef union packed {
+    logic [31:0] data;
+    logic [3:0][7:0] bytes;
+  } packed_u;
+
+  packed_u u;
+
+  initial begin
+
+    u.data = 32'hAABBCCDD;
+
+    $display("data     = %h", u.data);
+
+    foreach(u.bytes[i])
+      $display("bytes[%0d] = %h", i, u.bytes[i]);
+
+  end
+endmodule
