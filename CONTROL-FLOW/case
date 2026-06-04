@@ -1,0 +1,43 @@
+module case_tb;
+  logic [3:0] sel;
+
+  initial begin
+    sel = 4'b1x10;
+
+    $display("sel=%0b", sel);
+
+    $display("\n ========NORMAL CASE=======");
+    case(sel)
+      4'b1010: $display("NORMAL_CASE: MATCH 1010");
+      4'b10x1: $display("NORMAL_CASE: MATCH 10x1");
+      default: $display("NORMAL_CASE: DEFAULT_CASE");
+    endcase
+
+    $display("\n =====casez=====");
+    casez(sel)
+      4'b10??: $display("CASEZ: MATCH 10??");
+      4'b11??: $display("CASEZ: MATCH 11??");
+      default: $display("CASEZ: DEFAULT");
+    endcase
+
+    $display("\n =======casex======");
+    casex(sel)
+      4'b10?0: $display("CASEX: MATCH");
+      default: $display("CASEX: DEFAULT");
+    endcase
+     $display("\n =======priority case======");
+    priority case(sel)
+      4'b1?10: $display("PRIORITY: MATCH 1x10");
+      4'b101x: $display("PRIORITY: MATCH 1010");
+      default: $display("PRIORITY: DEFAULT");
+    endcase
+$display("\n =======unique case======");
+    unique case(sel)
+      4'b1001: $display("UNIQUE: MATCH 1001");
+      4'b1011: $display("UNIQUE: MATCH 1011");
+      4'b10x1: $display("UNIQUE: MATCH 10x1");
+      default: $display("UNIQUE: DEFAULT");
+    endcase
+
+  end
+endmodule
