@@ -1,0 +1,32 @@
+module loop_tb;
+  int i;
+  initial begin
+    $display("===========FOR_LOOP========");
+    for(i=0;i<10;i=i+1) begin
+    $display("i=%0d",i);
+  end
+    $display("===========WHILE_LOOP==========");
+    i=0;
+    while(i<5) begin
+      $display("i=%0d",i);
+      i++;
+    end
+    $display("=================DO_WHILE==========");
+    i=0;
+    do begin
+      $display("i=%0d",i);
+      i++;
+    end while(i<5);
+    i=0;
+    forever begin
+      $display("i=%0d",i);
+      i++;
+      if(i==5) begin
+        $display("stop foreverloop");
+        $finish;
+      end
+    end
+
+    
+  end
+endmodule
