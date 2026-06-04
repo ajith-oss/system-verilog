@@ -1,0 +1,25 @@
+module break_continue_tb;
+  int i;
+
+  initial begin
+    for (i = 0; i < 10; i = i + 1) begin
+
+      // Skip this iteration
+      if (i == 3) begin
+        $display("CONTINUE at i=%0d (skipping this value)", i);
+        continue;
+      end
+
+      // Stop loop completely
+      if (i == 7) begin
+        $display("BREAK at i=%0d (stopping loop)", i);
+        break;
+      end
+
+      $display("Processing i = %0d", i);
+
+    end
+
+    $display("Loop ended");
+  end
+endmodule
