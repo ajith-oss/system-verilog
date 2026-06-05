@@ -1,0 +1,30 @@
+module tb;
+  //1.function 1 :calculate total
+  function int get_total(input int a,input int b,input int c);
+    return a+b+c;
+  endfunction
+  //function 2 :claculate average
+  function real get_avg(input int total);
+    return total/3.0;
+  endfunction
+  //function 3 : select the grade
+  function void print_grade(input real avg);
+    if(avg>=90)
+      $display("grade = A+");
+    else if(avg>=75)
+      $display("grade = A");
+    else if(avg>=50)
+      $display("grade = B");
+    else
+      $display("Fail");
+  endfunction
+  initial begin
+    int total;
+    real avg;
+    total=get_total(80,95,90);
+    avg =get_avg(255);
+    print_grade(85.0);
+     $display("Total = %0d", total);
+    $display("Average = %0f", avg);
+  end
+endmodule
