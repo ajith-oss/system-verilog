@@ -1,0 +1,24 @@
+/*module tb;
+  function int add(input int a,input int b);
+    return a+b;
+  endfunction
+  initial begin
+    int x,y,sum;
+    x=10;
+    y=20;
+    sum=add(x,y);
+    $display("sum=%0d",sum);
+  end
+endmodule*/
+
+module tb;
+  function int add(input int a);
+    return a+10;
+  endfunction
+  initial begin
+    int x,sum;
+    x=5;
+    sum=add(x);
+    $display("sum=%0d",sum);
+  end
+endmodule
