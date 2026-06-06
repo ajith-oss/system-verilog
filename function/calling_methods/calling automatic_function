@@ -1,0 +1,43 @@
+/*module test_tb;
+  function automatic int multiply(input int a,input int b);
+    return a*b;
+  endfunction
+  initial begin
+    int x,y;
+    x=multiply(10,10);
+    y=multiply(10,20);
+    $display("x=%0d",x);
+    $display("y=%0d",y);
+  end
+endmodule*/
+
+module tb;
+
+  function automatic int factorial(input int n);
+
+    int result;
+
+    if (n <= 1) begin
+      $display("factorial(%0d) = 1 (base case)", n);
+      return 1;
+    end
+    else begin
+      result = n * factorial(n - 1);
+      $display("factorial(%0d) = %0d", n, result);
+
+      return result;
+    end
+
+  endfunction
+
+  initial begin
+    int final_result;
+
+    final_result = factorial(5);
+
+    $display("FINAL RESULT = %0d", final_result);
+  end
+
+endmodule
+    
+    
