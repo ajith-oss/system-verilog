@@ -1,0 +1,25 @@
+module tb;
+  function int add_gst(input int price);
+    return price+(price*18/100);
+  endfunction
+    function int discount(input int price);
+      return price-50;
+    endfunction
+  
+  function int bill_status(input int final_price);
+    if(final_price>500)
+      return "Expensive";
+    else
+      return "NORMAL";
+  endfunction
+  initial begin
+    int base_price=600;
+    int final_price;
+    string status;
+    final_price=discount(add_gst(base_price));
+    status=bill_status(final_price);
+    $display("base_price=%0d",base_price);
+    $display("final_price=%0d",final_price);
+    $display("status=%s",status);
+  end
+endmodule
