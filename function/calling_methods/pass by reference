@@ -1,0 +1,23 @@
+module tb;
+  function void transaction(ref int balance);
+    balance=balance+500;
+    $display("AFTER DEPOSIT:%0d",balance);
+    balance=balance-200;
+    $display("AFTER WITHDRAWAL:%0d",balance);
+  endfunction
+  int account_balance=1000;
+  initial begin
+    $display("BEFORE TRANSACTION:%0d",account_balance);
+             transaction(account_balance);
+             $display("FINAL BALANCE:%0d",account_balance);
+             end
+             endmodule
+
+
+
+
+
+BEFORE TRANSACTION:1000
+AFTER DEPOSIT:1500
+AFTER WITHDRAWAL:1300
+FINAL BALANCE:1300
