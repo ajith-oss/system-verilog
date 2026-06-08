@@ -1,0 +1,14 @@
+module tb;
+  function void salary_cal(int salary);
+    salary=salary+5000;
+    $display("AFTER BONUS:%0d",salary);
+    salary=salary-2000;
+    $display("AFTER TAX_DEDUCTION:%0d",salary);
+  endfunction
+  int emp_salary=50000;
+  initial begin
+    $display("ACTUAL SALARY:%d",emp_salary);
+    salary_cal(emp_salary);
+    $display("FINAL SALARY:%0d",emp_salary);
+  end
+endmodule
