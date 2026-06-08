@@ -1,0 +1,14 @@
+module tb;
+  
+  function int total_mark(input int arr[5]);
+    int i;
+    int sum=0;
+    for(i=0;i<5;i=i+1)
+      sum=sum+arr[i];
+    return sum;
+  endfunction
+  int mark[5]={80,85,90,45,87};
+  initial begin
+    $display("total=%0d",total_mark(mark));
+  end
+endmodule
