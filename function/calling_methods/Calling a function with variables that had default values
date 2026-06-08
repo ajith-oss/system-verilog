@@ -1,0 +1,17 @@
+/*module tb;
+  function int add(int a=10,int b=20);
+    return a+b;
+  endfunction
+  initial begin
+    $display("sum=%0d",add());
+  end
+endmodule*/
+module tb;
+  function int add(int a=10,int b=20);
+    return a+b;
+  endfunction
+  initial begin
+    $display("sum=%0d",add(50,100));
+             end
+             endmodule
+    
