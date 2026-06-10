@@ -1,0 +1,29 @@
+module tb;
+
+  task automatic deliver(input int parcel_no);
+
+    int my_parcel;
+
+    begin
+      my_parcel = parcel_no;
+
+      $display("Picked Parcel %0d at time %0t",
+                my_parcel, $time);
+
+      #5;
+
+      $display("Delivered Parcel %0d at time %0t",
+                my_parcel, $time);
+    end
+
+  endtask
+
+  initial begin
+    fork
+      deliver(101);
+      deliver(102);
+      deliver(103);
+    join
+  end
+
+endmodule
