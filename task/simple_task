@@ -1,0 +1,59 @@
+// Code your testbench here
+// or browse Examples
+/*module tb;
+  task add(input int a,input int b,output int sum);
+    sum=a+b;
+  endtask
+  int result;
+  initial begin
+    add(10,30,result);
+    $display("sum=%0d",result);
+  end
+endmodule*/
+module tb;
+  reg red,green,yellow;
+  //task1
+  task red_light;
+    begin
+      red=1;
+      yellow=0;
+      green=0;
+      $display("RED ON %0t",$time);
+      #5;
+    end
+      endtask
+  //task2
+  task yellow_light;
+    begin
+      red=0;
+      yellow=1;
+      green=0;
+      $display("YELLOW ON %0t",$time);
+      #5;
+    end
+  endtask
+  //task3
+  task green_light;
+    begin
+    red=0;
+    yellow=0;
+    green=1;
+    $display("GREEN ON %0t",$time);
+      #3;
+    end
+  endtask
+  initial begin
+    red=0;
+    green=0;
+    yellow=0;
+    repeat(2) begin
+      red_light();
+      yellow_light();
+      green_light();
+    end
+    $display("SIMULATION ENDED TIME %0t",$time);
+  end
+endmodule
+             
+          
+    
