@@ -1,0 +1,19 @@
+module tb;
+  event task_done;
+  task automatic download_file();
+    $display("[%0t] DOWNLOAD STARTED",$time);
+    #10;
+    $display("[%0t] DOWNLOAD COMPLETED",$time);
+    ->task_done;
+  endtask
+  initial begin
+     $display("[%0t] Waiting for download", $time);
+    download_file();
+  end
+  initial begin
+
+    @task_done;
+
+    $display("[%0t] Processing downloaded file", $time);
+  end
+endmodule
