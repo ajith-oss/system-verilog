@@ -1,0 +1,26 @@
+module tb;
+
+  task countdown(int n);
+
+    $display("Starting countdown");
+
+    while(n > 0) begin
+
+      $display("n = %0d", n);
+
+      if(n == 3)
+        disable countdown;
+
+      n--;
+    end
+
+    $display("Task Completed");
+
+  endtask
+
+  initial begin
+    countdown(5);
+    $display("Back in initial");
+  end
+
+endmodule
