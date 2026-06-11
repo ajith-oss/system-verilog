@@ -1,0 +1,36 @@
+module tb;
+  //function 1
+  function int calculate_total(int m1,int m2,int m3);
+    return m1+m2+m3;
+  endfunction
+  //function 2
+  function int calculate_percentage(int total);
+    return (total*100)/300;
+  endfunction
+  //function 3
+  function string get_grade(int per);
+    if(per>90)
+      return "A";
+      else if(per>75)
+        return "B";
+        else if(per>50)
+          return "C";
+          else
+            return "FAIL";
+  endfunction
+  task generate_report(int mark1,int mark2,int mark3);
+    int total;
+    int percentage;
+    string grade;
+    total=calculate_total(mark1,mark2,mark3);
+    percentage=calculate_percentage(total);
+    grade=get_grade(percentage);
+    $display("total:%0d",total);
+    $display("percentage:%0d",percentage);
+    $display("grade:%s",grade);
+  endtask
+  initial begin
+    generate_report(80,90,60);
+  end
+endmodule
+        
