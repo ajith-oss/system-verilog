@@ -1,0 +1,50 @@
+module tb;
+
+  bit clk = 0;
+  bit start;
+  bit water_sensor;
+  bit motor_on;
+  bit washing_started;
+
+  event wash_done;
+  initial begin
+    $display("[%0t] MACHINE POWER ON", $time);
+
+    start = 0;
+    water_sensor = 0;
+    washing_started = 0;
+
+    #5  start = 1;
+    #10 water_sensor = 1;
+  end
+  always #5 clk = ~clk;
+  always_comb begin
+    motor_on = start && water_sensor;
+  end
+
+  always @(posedge clk) begin
+
+    if (motor_on && !washing_started) begin
+      $display("[%0t] WASHING STARTED", $time);
+
+      washing_started = 1;
+
+      -> wash_done;
+    end
+
+  end
+
+  initial begin
+
+    $display("[%0t] WAITING FOR WASH COMPLETION", $time);
+
+    @wash_done;
+
+    $display("[%0t] DRYING CLOTHES", $time);
+
+    #10;
+    $finish;
+
+  end
+
+endmodule
