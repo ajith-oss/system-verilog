@@ -1,0 +1,36 @@
+module tb;
+
+  task automatic password_unlock();
+    #20;
+    $display("[%0t] Password Accepted", $time);
+  endtask
+
+  task automatic fingerprint_unlock();
+    #10;
+    $display("[%0t] Fingerprint Matched", $time);
+  endtask
+
+  task automatic screen_timeout();
+    #30;
+    $display("[%0t] Screen Timed Out", $time);
+  endtask
+
+  initial begin
+
+    $display("[%0t] Phone Locked", $time);
+
+    fork
+      password_unlock();
+      fingerprint_unlock();
+      screen_timeout();
+    join_any
+
+    $display("[%0t] First event occurred", $time);
+
+    disable fork;
+
+    $display("[%0t] Remaining tasks stopped", $time);
+
+  end
+
+endmodule
