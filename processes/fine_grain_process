@@ -1,0 +1,33 @@
+module tb;
+  process p1,p2;
+  
+  initial begin
+  fork
+    begin
+      p1=process::self();
+      repeat(10) begin
+        $display("[%0t] worker-1 running",$time);
+        #5;
+      end
+      $display("[%0t] WORKER-1 FINISHED",$time);
+    end
+    begin
+      p2=process::self();
+      repeat(10) begin
+      $display("[%0t] WORKER-2 RUNNING",$time);
+      #5;
+      end
+      $display("[%0t] WORKER-2 FINISHED",$time);
+    end
+  join_none
+    #10
+    $display("\n[%0t] Status of WORKER-1:%s",$time,p1.status());
+    $display("\n[%0t] Status of WORKER-2:%s",$time,p2.status());
+    p1.suspend();
+    $display("[%0t] suspend worker-1",$time);
+    #20
+    p1.resume();
+    $display("[%0t] RESUME_WORKER-1",$time);
+  end
+endmodule
+      
