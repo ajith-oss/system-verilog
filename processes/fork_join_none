@@ -1,0 +1,28 @@
+module tb;
+
+  task automatic task1();
+    #10;
+    $display("[%0t] Task1 Completed",$time);
+  endtask
+
+  task automatic task2();
+    #20;
+    $display("[%0t] Task2 Completed",$time);
+  endtask
+
+  initial begin
+
+    $display("[%0t] Before Fork",$time);
+
+    fork
+      task1();
+      task2();
+    join_none
+
+    $display("[%0t] After Fork",$time);
+
+    #30;
+
+  end
+
+endmodule
