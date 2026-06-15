@@ -1,0 +1,47 @@
+interface alu_if#(parameter n=4);
+  logic signed[n-1:0] a;
+  logic signed[n-1:0] b;
+  logic [1:0] op;
+  logic signed[n-1:0] result;
+endinterface
+
+module alu #(parameter n=4)(
+  input logic signed[n-1:0] a,
+  input logic signed[n-1:0] b,
+  input logic [1:0] op,
+  output logic signed[n-1:0] result);
+  always_comb begin
+    case(op)
+    2'b00:result=a+b;
+    2'b01:result=a-b;
+    2'b10:result=a&b;
+    2'b11:result=a|b;
+    endcase
+  end
+endmodule
+module top;
+
+  alu_if #(8) p();
+
+  alu #(8) dut (
+    .a(p.a),
+    .b(p.b),
+    .op(p.op),
+    .result(p.result)
+  );
+
+  initial begin
+    int i;
+
+    p.a = 8'd10;
+    p.b = 8'd3;
+
+    for (i = 0; i < 4; i++) begin
+      p.op = i[1:0];
+      #1;
+
+      $display("OP=%02b RESULT=%0d", p.op, p.result);
+    end
+  end
+
+endmodule
