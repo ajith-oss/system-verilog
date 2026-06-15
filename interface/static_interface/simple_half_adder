@@ -1,0 +1,30 @@
+interface ha_if;
+  logic a;
+  logic b;
+  logic sum;
+  logic carry;
+endinterface 
+
+module half_adder(ha_if p);
+  assign p.sum=p.a^p.b;
+  assign p.carry=p.a&p.b;
+endmodule
+module top;
+  ha_if p();
+  half_adder dut(p);
+  initial begin
+    p.a=0;p.b=0;
+    $display("a=%0b b=%0b sum=%0b carry=%0b",p.a,p.b,p.sum,p.carry);
+    #1
+    p.a=0;p.b=1;
+     $display("a=%0b b=%0b sum=%0b carry=%0b",p.a,p.b,p.sum,p.carry);
+    #1
+    p.a=1;p.b=0;
+     $display("a=%0b b=%0b sum=%0b carry=%0b",p.a,p.b,p.sum,p.carry);
+    #1
+    p.a=1;p.b=1;
+     $display("a=%0b b=%0b sum=%0b carry=%0b",p.a,p.b,p.sum,p.carry);
+  end
+endmodule
+    
+  
