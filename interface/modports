@@ -1,0 +1,92 @@
+interface alu_if;
+  logic [7:0] a;
+  logic [7:0] b;
+  logic [1:0] op;
+  logic [7:0] result;
+  task send_transaction(input [7:0] ta,input [7:0] tb, input [1:0] top);
+    a=ta;
+    b=tb;
+    op=top;
+  endtask
+  function [7:0] expected_result();
+    case(op)
+       2'b00: expected_result = a + b;
+      2'b01: expected_result = a - b;
+      2'b10: expected_result = a & b;
+      2'b11: expected_result = a | b;
+    endcase
+  endfunction
+  
+  modport dut(input a,
+              input b,
+              input op,
+              output result);
+  modport tb(output a,
+             output b,
+             output op,
+             input result,
+             import send_transaction,
+               import expected_result);
+             endinterface
+             
+             
+             module alu(alu_if.dut p);
+               always_comb begin
+                 case(p.op)
+      2'b00: p.result = p.a + p.b;
+      2'b01: p.result = p.a - p.b;
+      2'b10: p.result = p.a & p.b;
+      2'b11: p.result = p.a | p.b;
+                 endcase
+               end
+             endmodule
+
+module top;
+  alu_if p();
+  alu dut(p);
+  tb tb1(p);
+endmodule
+  
+module tb(alu_if.tb p);
+    initial begin
+
+    // ADD
+    p.send_transaction(10,3,2'b00);
+
+    #1;
+
+    $display("ADD  DUT=%0d EXP=%0d",
+              p.result,
+              p.expected_result());
+
+    // SUB
+    p.send_transaction(10,3,2'b01);
+
+    #1;
+
+    $display("SUB  DUT=%0d EXP=%0d",
+              p.result,
+              p.expected_result());
+
+    // AND
+    p.send_transaction(10,3,2'b10);
+
+    #1;
+
+    $display("AND  DUT=%0d EXP=%0d",
+              p.result,
+              p.expected_result());
+
+    // OR
+    p.send_transaction(10,3,2'b11);
+
+    #1;
+
+    $display("OR   DUT=%0d EXP=%0d",
+              p.result,
+              p.expected_result());
+
+  end
+endmodule
+
+  
