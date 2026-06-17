@@ -1,0 +1,42 @@
+interface dff_if;
+  logic clk;
+  logic q;
+  logic d;
+  clocking cb @(posedge clk);
+    output d;
+    input q;
+  endclocking
+endinterface
+
+module tb(dff_if p);
+  initial begin
+    $display("start stimulation");
+    p.cb.d <= 1;
+     @(p.cb);
+  $display("T=%0t d=%0b q=%0b", $time, p.d, p.q);
+
+  @(p.cb);
+  $display("T=%0t d=%0b q=%0b", $time, p.d, p.q);
+    @(p.cb);
+  $display("T=%0t d=%0b q=%0b", $time, p.d, p.q);
+    $finish;
+  end
+endmodule
+             module dff(
+  input logic clk,
+  input logic d,
+  output logic q);
+  always @(posedge clk) 
+    q<=d;
+endmodule
+
+module top;
+  dff_if p();
+  initial begin
+    p.clk =0;
+  end
+  always #5 p.clk=~p.clk;
+ 
+  dff dut(.clk(p.clk),.d(p.d),.q(p.q));
+  tb TB(p);
+endmodule
