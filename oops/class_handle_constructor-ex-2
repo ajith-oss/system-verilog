@@ -1,0 +1,41 @@
+class bank_account;
+  int balance;
+  int deposit;
+  string ac_name;
+  int account_num;
+  int withdrawal;
+  function new(int balance,
+               int deposit,
+               string ac_name,
+               int account_num,
+               int withdrawal);
+    this.balance=balance;
+    this.deposit=deposit;
+    this.ac_name=ac_name;
+    this.withdrawal=withdrawal;
+    this.account_num=account_num;
+  endfunction
+   function void display();
+
+    $display("ACCOUNT HOLDER = %s", ac_name);
+    $display("ACCOUNT NUMBER = %0d", account_num);
+    $display("INITIAL BALANCE = %0d", balance);
+    $display("DEPOSIT        = %0d", deposit);
+    $display("WITHDRAWAL     = %0d", withdrawal);
+    $display("FINAL BALANCE  = %0d",
+              balance + deposit - withdrawal);
+
+  endfunction
+
+endclass
+module tb;
+bank_account acc1;
+  bank_account acc2;
+  initial begin
+    acc1=new(500,300,"AJITH",123456,200);
+    acc2=new(1000,300,"kumar",1245,300);
+    acc1.display();
+    acc2.display();
+
+  end
+endmodule
