@@ -1,0 +1,69 @@
+package company_pkg;
+parameter string company_name="ABC TECHNOLOGIES";
+endpackage
+import company_pkg::*;
+class employee;
+  string name;
+  int salary;
+  const int emp_id;
+  static const int max_work_hours=8;
+  function new(
+    string name,
+    int salary,
+    int emp_id);
+    this.name=name;
+    this.emp_id=emp_id;
+    this.salary=salary;
+  endfunction
+  function void display();
+    $display("\n----- Employee Details -----");
+    $display("Company      = %s", company_name);
+    $display("Employee ID  = %0d", emp_id);
+    $display("Name         = %s", name);
+    $display("Salary       = %0d", salary);
+    $display("Work Hours   = %0d", max_work_hours);
+  endfunction
+endclass
+class engineer extends employee;
+   string domain;
+
+  function new(string name,
+               int salary,
+               int emp_id,
+               string domain);
+
+    super.new(name, salary, emp_id);
+
+    this.domain = domain;
+
+  endfunction
+
+  function void display();
+
+    super.display();
+
+    $display("Domain       = %s", domain);
+
+  endfunction
+
+endclass
+
+
+module tb;
+
+  engineer eng1;
+  engineer eng2;
+
+  initial begin
+
+    eng1 = new("Ajith", 50000, 101, "Verification");
+    eng2 = new("Kumar", 60000, 102, "Design");
+
+    eng1.display();
+    eng2.display();
+    $display("\nMax Work Hours = %0d",
+             employee::max_work_hours);
+
+  end
+
+endmodule
