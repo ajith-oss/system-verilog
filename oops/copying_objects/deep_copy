@@ -1,0 +1,54 @@
+class processor;
+  string brand;
+  int core;
+  int freq;
+endclass
+class laptop;
+  string model;
+  int ram;
+  int price;
+  processor cpu;
+  function new();
+    cpu=new();
+  endfunction
+  function laptop deep_copy();
+    laptop temp;
+    temp=new();
+    temp.model=this.model;
+    temp.ram=this.ram;
+    temp.price=this.price;
+    temp.cpu.brand=this.cpu.brand;
+    temp.cpu.core=this.cpu.core;
+    temp.cpu.freq=this.cpu.freq;
+    return temp;
+  endfunction
+     function void display();
+
+    $display("----------------------------------");
+    $display("MODEL      = %s", model);
+    $display("RAM        = %0d GB", ram);
+    $display("PRICE      = %0d", price);
+    $display("CPU BRAND  = %s", cpu.brand);
+    $display("CPU CORES  = %0d", cpu.core);
+       $display("CPU FREQ   = %0.1f GHz", cpu.freq);
+    $display("----------------------------------");
+  endfunction
+endclass
+module tb;
+  laptop lap1;
+  laptop lap2;
+  initial begin
+    lap1=new();
+     lap1.model         = "Dell XPS";
+    lap1.ram           = 16;
+    lap1.price         = 90000;
+
+    lap1.cpu.brand     = "Intel";
+    lap1.cpu.core     = 8;
+    lap1.cpu.freq = 3.5;
+    lap2=lap1.deep_copy;
+    lap2.cpu.brand="AMD";
+    lap1.display();
+    lap2.display();
+  end
+endmodule
