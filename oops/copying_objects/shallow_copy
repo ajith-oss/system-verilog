@@ -1,0 +1,41 @@
+class customer;
+  string name;
+endclass
+class bank_account_details;
+  int account_no;
+  int balance;
+  int deposit;
+  int withdrawal;
+  customer cust;
+  function new();
+    cust=new();
+  endfunction
+  function void display();
+    $display("ACCOUNT_HOLDER_NAME=%s",cust.name);
+    $display("ACCOUNT_NO=%0d",account_no);
+    $display("DEPOSITED=%0d",deposit);
+    $display("TOTAL BALANCE=%0d",deposit+balance);
+  endfunction
+endclass
+module tb;
+  bank_account_details acc1;
+   bank_account_details acc2;
+  initial begin
+    acc1=new();
+    acc1.cust.name="AJITH";
+    acc1.account_no=123;
+    acc1.balance=10000;
+    acc1.deposit=500;
+    acc1.withdrawal=200;
+    acc2=new acc1;
+    acc2.account_no=124;
+    acc2.cust.name="KUMAR";
+    acc1.display();
+    acc2.display();
+  end
+endmodule
+    
+    
+  
+    
+  
