@@ -1,0 +1,46 @@
+class employee;
+  string company_name;
+  int emp_id;
+  function void display_employee();
+  $display("company_name=%s",company_name);
+    $display("emp_id=%0d",emp_id);
+    endfunction
+endclass
+class engineer extends employee;
+  string qualification;
+  string branch;
+  function void display_engineer();
+    $display("\n----------QUALIFICATION_DETAILS-----------");
+    $display("QUALIFICATION:%s",qualification);
+    $display("BRANCH:%s",branch);
+  endfunction
+endclass
+  class domain extends engineer;
+    string domain_name;
+    int experience;
+    int salary;
+    function void display_domain();
+      $display("\n-----------DOMAIN_DETAILS-------------");
+      $display("DOMAIN_NAME:%s",domain_name);
+      $display("EXPERIENCE:%0d",experience);
+      $display("SALARY:%0d",salary);
+      endfunction
+  endclass
+module tb;
+  domain e1;
+  initial begin
+    e1=new();
+    e1.company_name="SILICON_CRAFT";
+    e1.emp_id=346;
+    e1.qualification="B E";
+    e1.branch="ECE";
+    e1.domain_name="VLSI_ENGINEER";
+    e1.experience=3;
+    e1.salary=50000;
+    e1.display_employee();
+    e1.display_engineer();
+    e1.display_domain();
+  end
+endmodule
+    
+   
