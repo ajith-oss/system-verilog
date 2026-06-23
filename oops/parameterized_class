@@ -1,0 +1,64 @@
+class packet;
+  bit [7:0] addr;
+  bit [31:0] data;
+  function new(bit [7:0] addr,
+               bit [31:0] data);
+    this.addr=addr;
+    this.data=data;
+  endfunction
+  function void display();
+    $display("ADDR=%0h DATA=%0h",addr,data);
+  endfunction
+endclass
+class fifo #(type T = int);
+
+  T queue[$];
+
+  function void push(T data);
+    queue.push_back(data);
+  endfunction
+
+  function T pop();
+    return queue.pop_front();
+  endfunction
+
+  function void display();
+    $display("Queue Size = %0d",queue.size());
+  endfunction
+
+endclass
+module tb;
+  fifo #(int) int_fifo;
+  fifo #(string) str_fifo;
+  fifo #(packet) pkt_fifo;
+  packet pkt;
+  initial begin
+
+    int_fifo = new();
+    int_fifo.push(10);
+    int_fifo.push(20);
+
+    $display("INT POP = %0d",
+              int_fifo.pop());
+
+    str_fifo = new();
+    str_fifo.push("AJITH");
+    str_fifo.push("KUMAR");
+
+    $display("STRING POP = %s",
+              str_fifo.pop());
+
+    pkt_fifo = new();
+
+    pkt = new(8'h10,32'hAAAA1111);
+    pkt_fifo.push(pkt);
+
+    pkt = new(8'h20,32'hBBBB2222);
+    pkt_fifo.push(pkt);
+
+    pkt = pkt_fifo.pop();
+
+    pkt.display();
+
+  end
+endmodule
