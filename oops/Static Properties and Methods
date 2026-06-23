@@ -1,0 +1,32 @@
+class employee;
+  int salary;
+  string name;
+  static string company_name="BROWN MAGIC";
+  static int emp_count=0;
+  function new(string name,int salary);
+    this.salary=salary;
+    this.name=name;
+    
+    emp_count++;
+  endfunction
+  function void display();
+    $display("NAME=%s",name);
+    $display("SALARY=%0d",salary);
+    $display("COMPANY_NAME=%s",company_name);
+  endfunction
+  static function void show_count();
+    $display("TOTAL_EMPLOYEE_COUNT=%0d",emp_count);
+  endfunction
+endclass
+  module tb;
+    employee e1;
+    employee e2;
+    initial begin
+      e1=new("AJITH",40000);
+      e2=new("kiran",50000);
+      e1.display();
+      e2.display();
+      employee::show_count();
+    end
+  endmodule
+    
