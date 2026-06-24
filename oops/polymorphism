@@ -1,0 +1,78 @@
+class packet;
+  rand bit[7:0] addr;
+  rand bit[31:0] data;
+  virtual function void print();
+    $display("base_packet addr=%0h data=%0h",addr,data);
+  endfunction
+  virtual function bit[7:0] calculate_crc();
+    return 8'h00;
+  endfunction
+endclass
+class uart extends packet;
+  function void print();
+    $display("Uart_packet addr=%0h data=%0h",addr,data);
+  endfunction
+  function bit[7:0] calculate_crc();
+    return addr^data[7:0];
+  endfunction
+endclass
+class spi extends packet;
+  function void print();
+    $display("SPI_packet addr=%0h data=%0h",addr,data);
+  endfunction
+  function bit[7:0] calaculate_crc();
+    return addr+data[7:0];
+  endfunction
+endclass
+class I2c  extends packet;
+   function void print();
+     $display("I2C_packet addr=%0h data=%0h",addr,data);
+  endfunction
+  function bit[7:0] calaculate_crc();
+    return ~(addr^data[7:0]);
+  endfunction
+endclass
+
+module tb;
+  packet pkt;
+
+  uart u;
+  spi  s;
+  I2c  i;
+
+  bit [7:0] crc;
+    initial begin
+
+    u = new();
+    s = new();
+    i = new();
+
+    u.addr = 8'h11;
+    u.data = 32'hAAAA;
+
+    s.addr = 8'h22;
+    s.data = 32'hBBBB;
+
+    i.addr = 8'h33;
+    i.data = 32'hCCCC;
+
+    pkt = u;
+    pkt.print();
+    crc = pkt.calculate_crc();
+    $display("CRC=%0h\n", crc);
+
+    pkt = s;
+    pkt.print();
+    crc = pkt.calculate_crc();
+    $display("CRC=%0h\n", crc);
+
+    pkt = i;
+    pkt.print();
+    crc = pkt.calculate_crc();
+    $display("CRC=%0h\n", crc);
+
+  end
+
+endmodule
+    
+    
