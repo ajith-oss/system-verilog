@@ -1,0 +1,56 @@
+class packet;
+
+  local bit [7:0] addr;
+  local int       length;
+  local int       crc;
+
+  function void set_addr(bit [7:0] a);
+
+    addr = a;
+
+  endfunction
+
+  function void set_length(int len);
+
+    if(len > 0)
+      length = len;
+    else
+      $display("ERROR: Invalid Length");
+
+  endfunction
+
+  function void calculate_crc();
+
+    crc = addr + length;
+
+  endfunction
+
+  function void display();
+
+    $display("ADDR=%0h LENGTH=%0d CRC=%0d",
+              addr,length,crc);
+
+  endfunction
+
+endclass
+
+
+module tb;
+
+  packet pkt;
+
+  initial begin
+
+    pkt = new();
+
+    pkt.set_addr(8'h10);
+
+    pkt.set_length(20);
+
+    pkt.calculate_crc();
+
+    pkt.display();
+
+  end
+
+endmodule
