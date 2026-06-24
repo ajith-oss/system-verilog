@@ -1,0 +1,59 @@
+virtual class bank_account;
+
+  protected int balance;
+
+  function new(int bal);
+    balance = bal;
+  endfunction
+
+  pure virtual function void withdraw(int amount);
+
+endclass
+    class savings_account extends bank_account;
+
+  function new(int bal);
+    super.new(bal);
+  endfunction
+
+  function void withdraw(int amount);
+
+    if(balance - amount >= 1000) begin
+      balance = balance - amount;
+      $display("Savings: Withdraw Success, Balance=%0d",balance);
+    end
+    else
+      $display("Savings: Minimum Balance Violation");
+
+  endfunction
+
+endclass
+    class current_account extends bank_account;
+
+  function new(int bal);
+    super.new(bal);
+  endfunction
+
+  function void withdraw(int amount);
+
+    balance = balance - amount;
+    $display("Current: Withdraw Success, Balance=%0d",balance);
+
+  endfunction
+
+endclass
+    module tb;
+
+  savings_account s;
+  current_account c;
+
+  initial begin
+
+    s = new(5000);
+    c = new(5000);
+
+    s.withdraw(4500);
+    c.withdraw(4500);
+
+  end
+
+endmodule
