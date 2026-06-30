@@ -1,0 +1,74 @@
+class packet;
+   rand  bit [7:0]  src_addr;
+   rand  bit [7:0]  dst_addr;
+   rand  bit [15:0] length;
+   rand  bit [2:0]  priorit;
+   randc bit [1:0]  pkt_type;
+  rand byte payload[];
+  int packet_id;
+  function new(int id);
+    this.packet_id=id;
+    payload=new[8];
+  endfunction
+   function int payload_sum();
+
+      int sum = 0;
+
+      foreach(payload[i])
+         sum += payload[i];
+
+      return sum;
+
+   endfunction
+task display();
+
+      $display("\n======================================");
+      $display("Packet ID       : %0d", packet_id);
+      $display("Source Address  : %0d", src_addr);
+      $display("Destination     : %0d", dst_addr);
+      $display("Length          : %0d", length);
+      $display("Priority        : %0d", priorit);
+      $display("Packet Type     : %0d", pkt_type);
+
+      $write("Payload         : ");
+
+      foreach(payload[i])
+         $write("%0d ", payload[i]);
+
+      $display("");
+
+      $display("Payload Sum     : %0d", payload_sum());
+
+      $display("======================================");
+
+   endtask
+
+endclass
+module tb;
+
+   packet pkt;
+
+   initial begin
+
+      // Create object
+      pkt = new(1001);
+
+      // Generate 5 packets
+      repeat(5)
+      begin
+
+         if(pkt.randomize())
+         begin
+            pkt.display();
+         end
+         else
+         begin
+            $display("Randomization Failed");
+         end
+
+      end
+
+   end
+
+endmodule
+    
