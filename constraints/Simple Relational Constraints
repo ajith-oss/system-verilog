@@ -1,0 +1,23 @@
+
+class random_values;
+  rand bit[3:0] num;
+  constraint c1{
+    num<15;
+  }
+  constraint c2{
+    num>5;
+  }
+endclass
+module tb;
+  random_values r;
+  initial begin
+    r=new();
+    repeat(10)
+      begin
+         if (r.randomize())
+        $display("Randomization Success : num = %0d", r.num);
+      else
+        $display("Randomization Failed");
+  end
+  end
+endmodule
