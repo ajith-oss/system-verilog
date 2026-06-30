@@ -1,0 +1,20 @@
+class packet;
+  rand bit [7:0] addr;
+  constraint c_addr{
+    addr inside{[0:255]};
+  };
+endclass
+module tb;
+  packet p;
+  initial begin
+    p=new();
+    p.randomize();
+    $display("default value=%0d",p.addr);
+    p.randomize() with { addr inside
+      {[100:120]};
+    };
+    $display("Overridden Address = %0d", p.addr);
+  end
+endmodule
+
+    
