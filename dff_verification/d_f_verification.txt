@@ -1,8 +1,0 @@
-module dff(dff_if.dut p);
-  always_ff @(posedge p.clk) begin
-    if(p.reset)
-      p.q<=1'b0;
-    else
-      p.q<=p.d;
-  end
-endmodule

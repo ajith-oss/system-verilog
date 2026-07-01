@@ -1,7 +1,0 @@
-class transaction;
-  rand bit reset;
-  rand bit d;
-  bit q;
-  function new();
-  endfunction
-endclass
