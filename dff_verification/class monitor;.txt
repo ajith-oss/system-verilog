@@ -1,0 +1,23 @@
+class monitor;
+  transaction tr;
+  mailbox #(transaction) mbx;
+  virtual dff_if.mon p;
+  function new(mailbox #(transaction) mbx,virtual dff_if.mon p);
+    this.mbx=mbx;
+    this.p=p;
+  endfunction
+  task run();
+    forever begin
+      @(posedge p.clk);
+      #1;
+      tr=new();
+      tr.reset=p.reset;
+      tr.d=p.d;
+      tr.q=p.q;
+      mbx.put(tr);
+       $display("[%4t] [MON] Sampled   : reset=%0b d=%0b q=%0b", $time, tr.reset, tr.d, tr.q);
+    end
+  endtask
+endclass
+      
+  

@@ -1,0 +1,29 @@
+ class scoreboard;
+      transaction tr;
+      mailbox #(transaction) mbx;
+      bit expected_q;
+
+      function new(mailbox #(transaction) mbx);
+        this.mbx=mbx;
+      endfunction
+
+      task run();
+        forever begin
+          mbx.get(tr);
+
+          if(expected_q == tr.q)
+         $display("[%4t] [SCB] VERIFIED  : PASS\n--------------------------------------------", $time);
+          else
+        $display("[%4t] [SCB] VERIFIED  : FAIL (Expected=%0b Actual=%0b)\n--------------------------------------------", $time, expected_q, tr.q);
+
+          if(tr.reset)
+            expected_q = 1'b0;
+          else
+            expected_q = tr.d;
+
+        end
+      endtask
+    endclass
+
+        
+        

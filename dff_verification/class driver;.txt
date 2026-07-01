@@ -1,0 +1,18 @@
+class driver;
+  transaction tr;
+  mailbox #(transaction) mbx;
+  virtual dff_if.drv p;
+  function new(mailbox #(transaction) mbx,virtual dff_if.drv p);
+    this.mbx=mbx;
+    this.p=p;
+  endfunction
+  task run();
+    forever begin
+      mbx.get(tr);
+      @(posedge p.clk);
+      p.reset<=tr.reset;
+      p.d<=tr.d;
+       $display("[%4t] [DRV] Driving   : reset=%0b d=%0b", $time, tr.reset, tr.d);
+    end
+  endtask
+endclass

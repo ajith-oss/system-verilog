@@ -1,0 +1,40 @@
+class environment;
+  
+  generator gen;
+  driver drv;
+   monitor mon;
+  scoreboard src;
+  
+  mailbox #(transaction) gen_drv_mbx;
+  mailbox #(transaction) mon_src_mbx;
+  
+  virtual dff_if.drv drv_p;
+  virtual dff_if.mon mon_p;
+  
+  function new(virtual dff_if.drv drv_p,
+               virtual dff_if.mon mon_p);
+    this.drv_p=drv_p;
+    this.mon_p=mon_p;
+     // Create mailboxes
+        gen_drv_mbx = new(1);
+        mon_src_mbx = new(1);
+
+        // Create components
+    gen = new(gen_drv_mbx);
+    drv = new(gen_drv_mbx, drv_p);
+    mon = new(mon_src_mbx, mon_p);
+    src = new(mon_src_mbx);
+  endfunction
+  task run();
+
+        fork
+            gen.run();
+            drv.run();
+            mon.run();
+            src.run();
+        join
+
+    endtask
+
+endclass
+  

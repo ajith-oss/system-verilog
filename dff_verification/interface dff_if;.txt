@@ -1,0 +1,23 @@
+interface dff_if;
+  logic clk;
+  logic reset;
+  logic d;
+  logic q;
+  modport dut(
+    input clk,
+    input reset,
+    input d,
+    output q);
+  modport drv(
+    input clk,
+    output reset,
+    output d);
+  modport mon(
+    input clk,
+    input reset,
+    input d,
+    input q);
+  endinterface
+  
+    
+  
