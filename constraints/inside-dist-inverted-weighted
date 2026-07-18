@@ -1,0 +1,135 @@
+class apb_transaction;
+  rand bit[7:0] paddr;
+  rand bit[7:0] pdata;
+  rand bit pwrite;
+    rand bit [3:0] pstrb;
+  rand bit start;
+  rand bit stop;
+  rand bit read;
+  rand bit write_cmd;
+  
+  int packet_id;
+  function new(int id);
+    packet_id=id;
+  endfunction
+  
+  extern constraint paddr_c;
+  
+  constraint r_c{ pwrite dist{
+    0:=90,
+    1:=10};
+  }
+  constraint inverted_paddr{
+    !(paddr inside{ 8'h02,
+         8'h03});
+  }
+  constraint p_strobe{
+    pstrb inside{ 4'b0001,
+         4'b0011,
+                 4'b1111};
+  }
+  constraint command{
+    start + stop + read + write_cmd == 1;}
+   function void display();
+
+      $display("-------------------------------------------");
+      $display("Packet ID   : %0d", packet_id);
+      $display("Address     : %0h", paddr);
+      $display("Write       : %0d", pwrite);
+      $display("Write Data  : %0h", pdata);
+      $display("PSTRB       : %b", pstrb);
+      $display("START       : %0d", start);
+      $display("STOP        : %0d", stop);
+      $display("READ        : %0d", read);
+      $display("WRITE CMD   : %0d", write_cmd);
+      $display("-------------------------------------------");
+   endfunction
+
+endclass
+     constraint apb_transaction::paddr_c
+{
+   paddr inside
+   {
+      8'h00,   // PRER_LO
+      8'h01,   // PRER_HI
+      8'h02,   // CTR
+      8'h03,   // TXR
+      8'h04    // CR
+   };
+}
+module tb;
+ apb_transaction p1;
+  initial begin
+    p1=new(1);
+     $display("\n******** Parent Transactions ********");
+    repeat(5)
+      begin
+
+        if(p1.randomize())
+            p1.display();
+         else
+            $display("Randomization Failed");
+
+      end
+  end
+endmodule
+
+
+******** Parent Transactions ********
+-------------------------------------------
+Packet ID   : 1
+Address     : 1
+Write       : 0
+Write Data  : 27
+PSTRB       : 0011
+START       : 0
+STOP        : 0
+READ        : 1
+WRITE CMD   : 0
+-------------------------------------------
+-------------------------------------------
+Packet ID   : 1
+Address     : 4
+Write       : 0
+Write Data  : 89
+PSTRB       : 0011
+START       : 0
+STOP        : 1
+READ        : 0
+WRITE CMD   : 0
+-------------------------------------------
+-------------------------------------------
+Packet ID   : 1
+Address     : 1
+Write       : 0
+Write Data  : cb
+PSTRB       : 0001
+START       : 1
+STOP        : 0
+READ        : 0
+WRITE CMD   : 0
+-------------------------------------------
+-------------------------------------------
+Packet ID   : 1
+Address     : 1
+Write       : 0
+Write Data  : 64
+PSTRB       : 1111
+START       : 0
+STOP        : 0
+READ        : 0
+WRITE CMD   : 1
+-------------------------------------------
+-------------------------------------------
+Packet ID   : 1
+Address     : 1
+Write       : 0
+Write Data  : 10
+PSTRB       : 0001
+START       : 0
+STOP        : 0
+READ        : 0
+WRITE CMD   : 1
+-------------------------------------------
+
+    
