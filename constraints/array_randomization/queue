@@ -1,0 +1,20 @@
+class packet;
+  rand bit[6:0] data[$];
+  constraint c1{
+    data.size==8;
+  }
+  constraint c2{
+    foreach(data[i])
+      data[i] inside{[100:255]};
+  }
+endclass
+module tb;
+  packet p1;
+  initial begin
+    p1=new();
+    repeat(10) begin
+      p1.randomize();
+      $display("randimoized_value=%0p",p1.data);
+    end
+  end
+endmodule
