@@ -1,0 +1,27 @@
+class packet;
+
+  randc byte a;
+
+
+  constraint c1 {
+    a > 5;
+    a < 10;
+  }
+
+endclass
+
+module tb;
+
+  packet p;
+
+  initial begin
+    p = new();
+
+    repeat(5) begin
+      p.randomize();
+      $display("a=%0d", p.a);
+    end
+
+  end
+
+endmodule
