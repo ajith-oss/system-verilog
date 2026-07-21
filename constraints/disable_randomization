@@ -1,0 +1,31 @@
+class packet;
+  rand byte addr;
+  rand byte data;
+  constraint c1{
+    addr inside{[10:20]};
+  }
+  constraint c2{
+    data inside{[10:80]};
+  }
+endclass
+
+module tb;
+  packet p1,p2;
+  initial begin
+    p1=new();
+    p2=new();
+    p1.randomize();
+    p2.randomize();
+    $display("randomized=%0d",p1.addr);
+    $display("randomized=%0d",p2.data);
+    
+    p1.c1.constraint_mode(0);
+    p2.data.rand_mode(0);
+    p1.randomize();
+    p2.randomize();
+    $display("randomized=%0d",p1.addr);
+    
+    $display("randomized=%0d",p2.data);
+  end
+endmodule
+    
