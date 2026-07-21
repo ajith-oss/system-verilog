@@ -1,0 +1,29 @@
+class packet;
+  rand bit [7:0] addr;
+  rand bit [7:0] data;
+  bit parity;
+  constraint c1{
+    addr inside{[10:20]};
+  }
+  function void pre_randomize();
+    c1.constraint_mode(0);
+    $display("Before randomize");
+  endfunction
+   
+  function void post_randomize();
+    parity=^data;
+    $display("after_randomize=%0b",parity);
+  endfunction
+endclass
+module tb;
+  packet p;
+  initial begin
+    p=new();
+    p.randomize();
+    $display("final_values");
+    $display("adress=%0d",p.addr);
+    $display("data=%0d",p.data);
+    $display("parity=%0b",p.parity);
+  end
+endmodule
+  
