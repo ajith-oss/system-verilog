@@ -1,0 +1,48 @@
+module tb;
+
+  int balance;
+  int withdraw_amount;
+
+  initial begin
+
+    // Test Case 1 : Valid Withdrawal
+    balance         = 5000;
+    withdraw_amount = 3000;
+
+    $display("---------- Test Case 1 ----------");
+    $display("Balance = %0d", balance);
+    $display("Withdraw = %0d", withdraw_amount);
+
+    assert(withdraw_amount <= balance)
+    begin
+      balance = balance - withdraw_amount;
+      $display("PASS : Withdrawal Successful");
+      $display("Remaining Balance = %0d", balance);
+    end
+    else begin
+      $error("FAIL : Insufficient Balance");
+    end
+
+    $display("");
+
+    // Test Case 2 : Invalid Withdrawal
+    balance         = 5000;
+    withdraw_amount = 7000;
+
+    $display("---------- Test Case 2 ----------");
+    $display("Balance = %0d", balance);
+    $display("Withdraw = %0d", withdraw_amount);
+
+    assert(withdraw_amount <= balance)
+    begin
+      balance = balance - withdraw_amount;
+      $display("PASS : Withdrawal Successful");
+      $display("Remaining Balance = %0d", balance);
+    end
+    else begin
+      $error("FAIL : Insufficient Balance");
+    end
+
+  end
+
+endmodule
