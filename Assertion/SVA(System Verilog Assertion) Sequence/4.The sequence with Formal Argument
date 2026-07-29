@@ -1,0 +1,41 @@
+module tb;
+  int clk;
+  int reset;
+  int d;
+  int q;
+  always #5 clk=~clk;
+  always @(posedge clk) begin
+    if(reset) 
+      q<=0;
+    else
+      q<=d;
+  end
+  sequence follow(sig1,sig2);
+    sig1 ##1 sig2;
+  endsequence
+  property p1;
+    @(posedge clk)
+    disable iff(reset)
+    follow(d,q);
+  endproperty
+  
+  assert property(p1)
+    $display("[%0t] pass q follows d",$time);
+    else
+      $error("[%0t] fail q don't follows d",$time);
+    initial begin
+      clk=0;
+      reset=1;
+      d=0;
+      
+      #12 reset=0;
+      
+      #10 d=1;
+      #10 d=0;
+      #10 d=1;
+      #10 d=0;
+      #10 d=1;
+      #20;
+      $finish;
+    end
+    endmodule
