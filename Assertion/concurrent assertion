@@ -1,0 +1,40 @@
+module tb;
+  bit clk;
+  bit reset;
+  bit d;
+  bit q;
+  always #5 clk=~clk;
+  always @(posedge clk) begin
+    if(reset) 
+      q<=0;
+    else
+      q<=d;
+  end
+  
+  property p1;
+    @(posedge clk)
+    disable iff(reset)
+    d |=> q;
+  endproperty
+  
+  assert property(p1)
+    $display("pass : q followed d");
+    else
+      $error("fail: q not followed d");
+   
+    initial begin
+      clk = 0;
+    reset = 1;
+    d = 0;
+
+    #12;
+    reset = 0;
+
+    #10 d = 1;
+    #10 d = 0;
+    #10 d = 1;
+    #10 d = 1;
+    #20;
+$finish;
+    end
+    endmodule
