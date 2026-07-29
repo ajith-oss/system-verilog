@@ -1,0 +1,62 @@
+module tb;
+  bit clk;
+  bit reset;
+  bit d;
+  bit q;
+  always #5 clk=~clk;
+  always @(posedge clk) begin
+    if(reset) 
+      q<=0;
+    else
+      q<=d;
+  end
+  always @(posedge clk) begin
+    $display("[%0t] d=%0b q=%0b reset=%0b", $time, d, q, reset);
+  end
+  sequence s1;
+    (d | q);
+  endsequence
+  
+  property p1;
+    @(posedge clk)
+    disable iff(reset)
+    s1;
+  endproperty
+  
+  assert property(p1)
+    $display("[%0t]pass : q followed d",$time);
+    else
+      $error("[%0t]fail: q not followed d",$time);
+   
+    initial begin
+      clk = 0;
+    reset = 1;
+    d = 0;
+
+    #12;
+    reset = 0;
+
+    #10 d = 1;
+    #10 d = 0;
+    #10 d = 1;
+    #10 d = 1;
+    #20;
+$finish;
+    end
+    endmodule
+
+
+[5] d=0 q=0 reset=1
+[15] d=0 q=0 reset=0
+xmsim: *E,ASRTST (./testbench.sv,31): (time 15 NS) Assertion tb.p1 has failed
+[15]fail: q not followed d
+[25] d=1 q=0 reset=0
+[25]pass : q followed d
+[35] d=0 q=1 reset=0
+[35]pass : q followed d
+[45] d=1 q=0 reset=0
+[45]pass : q followed d
+[55] d=1 q=1 reset=0
+[55]pass : q followed d
+[65] d=1 q=1 reset=0
+[65]pass : q followed d
