@@ -1,0 +1,49 @@
+module tb;
+  bit clk;
+  bit reset;
+  bit d;
+  bit q;
+  always #5 clk=~clk;
+  always @(posedge clk) begin
+    if(reset) 
+      q<=0;
+    else
+      q<=d;
+  end
+  sequence s1;
+    d ##1 q;
+  endsequence
+  
+  property p1;
+    @(posedge clk)
+    disable iff(reset)
+    s1;
+  endproperty
+  
+  assert property(p1)
+    $display("[%0t]pass : q followed d",$time);
+    else
+      $error("[%0t]fail: q not followed d",$time);
+   
+    initial begin
+      clk = 0;
+    reset = 1;
+    d = 0;
+
+    #12;
+    reset = 0;
+
+    #10 d = 1;
+    #10 d = 0;
+    #10 d = 1;
+    #10 d = 1;
+    #20;
+$finish;
+    end
+    endmodule
+
+
+[35]fail: q not followed d
+[55]pass : q followed d
+[65]pass : q followed d
+Simulation complete via $finish(1) at time 72 NS + 0
